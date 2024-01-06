@@ -5,16 +5,32 @@
   <meta charset="utf-8">
   <title>2048</title>
 
-  <link rel="shortcut icon" href="favicon.ico">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <link rel="stylesheet" href="css/2048.css">
+  <script async src="sw.js"></script>
 
+  <link rel="shortcut icon" href="assets/2048.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/2048.svg" type="image/svg+xml">
+
+  <meta name="description" content="2048 game">
+  <meta name="keywords" content="2048,game,2048 game">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport"
     content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
+  <style>
+    svg {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+    }
+  </style>
 </head>
 
 <body xmlns="http://www.w3.org/2000/svg">
@@ -29,16 +45,14 @@
 
     <div class="above-game">
       <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
-      <!-- <a class="undo-button">
-        <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="2">
+      <a class="restart-button">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="#fff">
           <path d="M29 16 C29 22 24 29 16 29 8 29 3 22 3 16 3 10 8 3 16 3 21 3 25 6 27 9 M20 10 L27 9 28 2" />
         </svg>
-      </a> -->
-      <a class="restart-button">
-        <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#fff" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="16" style="position: relative;top:4px;">
-          <path d="M29 16 C29 22 24 29 16 29 8 29 3 22 3 16 3 10 8 3 16 3 21 3 25 6 27 9 M20 10 L27 9 28 2" />
+      </a>
+      <a class="undo-button">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff">
+          <path d="M16 2 L2 16 16 30 16 16 30 30 30 2 16 16 Z" />
         </svg>
       </a>
     </div>
