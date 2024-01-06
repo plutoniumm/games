@@ -7,7 +7,7 @@ const PRECACHE_URLS = [
   // './', // Alias for index.html
   /// games
   // 2048
-  '2048.html', 'css/2048.css', 'js/2048.js',
+  '2048.html', 'css/2048.css', 'js/2048.js', 'assets/2048.svg',
 ];
 
 // The install handler takes care of precaching the resources we always need.
