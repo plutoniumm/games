@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>tetris</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" href="css/tetris.css">
+  <!-- <script async src="sw.js"></script> -->
+  <!-- <link rel="manifest" href="manifest.json"> -->
+
+  <link rel="shortcut icon" href="assets/tetris.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/tetris.svg" type="image/svg+xml">
+
+  <meta name="description" content="tetris game">
+  <meta name="keywords" content="tetris,game,tetris game">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+    content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
+  <style>
+    svg {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <h1 class="game-title glow">TETRIS</h1>
+    <button id="start_game" class="btn">START</button>
+
+    <button id="restart_game" class="btn">RESTART</button>
+    <button id="pause_game" class="btn">PAUSE</button>
+
+    <button id="continue_game" class="btn">REDO</button>
+  </div>
+
+  <br />
+  <br />
+  <div id="score"></div>
+  <p id="levels"></p>
+
+  <canvas id="tetris" width="240" height="400" style="border:0px solid transparent" />
+  <script src="js/tetris.js"></script>
+</body>
+
+</html>

@@ -6,14 +6,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #faf8ef;
-  color: #776e65;
+  background: #eee;
+  color: #776;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
-}
-
-body {
-  margin: 80px 0;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .heading:after {
@@ -554,6 +552,12 @@ hr {
     display: block;
     box-sizing: border-box;
     margin-top: 2px;
+  }
+
+  .restart-button svg,
+  .undo-button svg {
+    position: relative;
+    top: 5px;
   }
 
   .game-container {
