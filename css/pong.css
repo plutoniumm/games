@@ -1,0 +1,18 @@
+:root {
+  --light: #fff;
+  --dark: #333;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--light);
+  font-family: 'Nunito', sans-serif;
+}
+
+canvas {
+  width: 100%;
+}
