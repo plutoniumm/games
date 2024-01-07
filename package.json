@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "dev": "vite dev --port 3000",
-    "deploy": "npx gh-pages -d ."
-  }
-}

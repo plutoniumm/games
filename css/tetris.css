@@ -3,7 +3,6 @@ body {
   background-size: 400% 400%;
   color: #fff;
   font-family: sans-serif;
-  font-size: 2em;
   text-align: center;
   height: 100vh;
   overflow-y: hidden;
@@ -11,82 +10,35 @@ body {
 
 canvas {
   max-height: 70vh;
+  margin-top: 64px;
 }
 
 .navbar {
-  height: 62px;
   width: 100%;
+  font-size: 32px;
+  text-align: center;
   position: fixed;
-  background: #090909;
   top: 0;
-  left: 0;
-  opacity: 0.65;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .game-title {
-  z-index: 10;
-  position: fixed;
-  width: 150px;
-  margin-left: -80px;
   font-family: 'Orbitron', sans-serif;
+  color: #FD0;
+  margin-top: 0;
 }
 
-#pause_game {
-  position: absolute;
-  right: 70px;
-  margin-top: 9px;
+#pause_game,
+#continue_game,
+#restart_game,
+.game-title {
   z-index: 10;
 }
 
 #continue_game {
   display: none;
-  position: absolute;
-  right: 77px;
-  margin-top: 15px;
-  font-size: 30px;
-  color: #f72585;
-  z-index: 10;
-}
-
-#start_game,
-#restart_game {
-  position: absolute;
-  right: 10px;
-  margin-top: 8px;
-  z-index: 10;
-}
-
-#restart_game {
-  display: none;
-}
-
-#score {
-  color: 4cc9f0;
-  border: 0px solid black;
-  font-size: 24px;
-  margin-top: -10px;
-  margin-bottom: 5px;
-  font-family: 'Orbitron', sans-serif;
-}
-
-#levels {
-  border: 0px solid black;
-  position: fixed;
-  top: 60px;
-  right: 10px;
-  font-size: 15px;
 }
 
 @media all and (max-width: 800px) {
-
-  #start_game {
-    margin-top: 70px;
-  }
-
   #restart_game {
     opacity: 0;
   }
@@ -106,22 +58,7 @@ canvas {
   }
 }
 
-/* adapt on smartphone */
 @media (max-width: 800px) {
-
-  .fas {
-    display: none;
-  }
-
-  .fas {
-    display: none;
-  }
-}
-
-@media (max-width: 800px) {
-  .btn {}
-
-
   .game-title {
     width: 75px;
     margin-left: -200px;

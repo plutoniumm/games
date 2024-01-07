@@ -30,27 +30,31 @@
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 3;
+      height: 28px;
+      width: 28px;
     }
   </style>
 </head>
 
-<body>
+<body xmlns="http://www.w3.org/2000/svg">
   <div class="navbar">
-    <h1 class="game-title glow">TETRIS</h1>
-    <button id="start_game" class="btn">START</button>
-
-    <button id="restart_game" class="btn">RESTART</button>
-    <button id="pause_game" class="btn">PAUSE</button>
-
-    <button id="continue_game" class="btn">REDO</button>
+    <h1 class="game-title">Тетрис: <span id="score">0</span></h1>
+    <div style="display: flex;justify-content: space-around;max-width: 300px;margin:0 auto;">
+      <svg id="restart_game" viewBox="0 0 32 32" fill="none" stroke="#fff">
+        <path d="M29 16 C29 22 24 29 16 29 8 29 3 22 3 16 3 10 8 3 16 3 21 3 25 6 27 9 M20 10 L27 9 28 2" />
+      </svg>
+      <svg id="pause_game" viewBox="0 0 32 32" fill="none" stroke="#fff">
+        <path d="M23 2 L23 30 M9 2 L9 30" />
+      </svg>
+      <svg id="continue_game" viewBox="0 0 32 32" fill="#fff">
+        <path d="M10 2 L10 30 24 16 Z" />
+      </svg>
+    </div>
   </div>
-
-  <br />
-  <br />
-  <div id="score"></div>
-  <p id="levels"></p>
-
-  <canvas id="tetris" width="240" height="400" style="border:0px solid transparent" />
+  <p><br></p>
+  <p><br></p>
+  <p><br></p>
+  <canvas id="tetris" width="300" height="500" style="border:0px solid transparent" />
   <script src="js/tetris.js"></script>
 </body>
 
