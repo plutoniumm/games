@@ -126,7 +126,7 @@ class Game {
     this.continueBtn.style.display = "none";
   }
 
-  drawMatrix ( matrix, offset ) {
+  drawMatrix ( matrix, offset, ghost = false ) {
     if ( !matrix ) {
       throw new Error( "Matrix is not defined" );
     }
@@ -135,6 +135,9 @@ class Game {
       row.forEach( ( value, x ) => {
         if ( value !== 0 ) {
           this.context.fillStyle = this.colors[ value ];
+          if ( ghost ) {
+            this.context.fillStyle = "#888";
+          }
           this.context.fillRect( x + offset.x, y + offset.y, 1, 1 );
         }
       } );
@@ -193,6 +196,15 @@ class Game {
 
     this.drawMatrix( this.arena, { x: 0, y: 0 } );
     this.drawMatrix( this.player.matrix, this.player.pos );
+
+    // we will also draw the ghost piece
+    let ghost = this.player.pos.y;
+    while ( !this.collide( this.arena, this.player ) ) {
+      this.player.pos.y++;
+    }
+    this.player.pos.y--;
+    this.drawMatrix( this.player.matrix, this.player.pos, true );
+    this.player.pos.y = ghost;
   };
 
   createPiece ( type ) {
