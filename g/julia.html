@@ -3,11 +3,35 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mandelbulb | CalcVisi</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" href="/css/julia.css">
+  <!-- <script async src="sw.js"></script> -->
+  <!-- <link rel="manifest" href="manifest.json"> -->
+
+  <link rel="shortcut icon" href="/assets/julia.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/julia.svg" type="image/svg+xml">
+
+  <meta name="description" content="julia sets">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+    content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
 
   <style>
+    svg {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+      height: 28px;
+      width: 28px;
+    }
+
     body,
     canvas {
       margin: 0;
@@ -21,6 +45,7 @@
       display: block;
     }
   </style>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
 </head>
 
 <body>
