@@ -25,6 +25,7 @@ canvas {
   font-family: 'Orbitron', sans-serif;
   color: #FD0;
   margin-top: 0;
+  width: 100%;
 }
 
 #pause_game,
@@ -55,12 +56,5 @@ canvas {
 @media all and (max-width: 500px) {
   canvas {
     height: 60vh;
-  }
-}
-
-@media (max-width: 800px) {
-  .game-title {
-    width: 75px;
-    margin-left: -200px;
   }
 }
