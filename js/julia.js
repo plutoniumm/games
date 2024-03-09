@@ -15,11 +15,12 @@ const Vec = ( a, b, c ) => new THREE.Vector3( a, b, c );
 
 canvas.width = IW;
 canvas.height = IH;
+const dt = () => Date.now() / 100 | 0;
+let time = dt();
 
 const init = () => {
   const renderer = new THREE.WebGLRenderer( {
-    antialias: true,
-    canvas: canvas
+    antialias: true, canvas
   } );
 
   const scene = new THREE.Scene();
@@ -33,17 +34,20 @@ const init = () => {
   const controls = new OrbitControls(
     perspective, renderer.domElement
   );
-  const clock = new THREE.Clock();
 
   perspective.position.set( 0, 0, 5.0 );
-  perspective.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+  perspective.lookAt( Vec( 0, 0, 0 ) );
 
   const geometry = new THREE.PlaneGeometry( IW, IH );
+
+  // to 3 digit binary
+  const bin = ( num ) => new Array( 3 ).fill( 0 )
+    .map( ( _, i ) => ( ( num % ( 2 ** ( i + 1 ) ) ) / ( 2 ** i ) ) | 0 ).reverse();
 
   const uniforms = {
     uApp: {
       value: {
-        time: clock.getElapsedTime(),
+        time: 0.0,
         resolution: new THREE.Vector2( IW, IH )
       }
     },
@@ -57,26 +61,23 @@ const init = () => {
     uParams: {
       value: {
         numIterations: 300,
-        convergenceCriteria: 0.0001,
-        finiteDifferenceEpsilon: 0.0001
+        convergenceCriteria: 0.001,
+        finiteDifferenceEpsilon: 0.001
       }
     },
     uScene: {
       value: {
         backgroundColor: Vec( 0, 0, 0 ),
         lights: [
-          {
-            direction: Vec( 1, 1, 1 ),
-            ambientColor: Vec( 1, 1, 1 ),
-            diffuseColor: Vec( 1, 1, 1 ),
-            specularColor: Vec( 1, 1, 1 )
-          },
-          {
-            direction: Vec( -1, -1, -1 ),
-            ambientColor: Vec( 1, 1, 1 ),
-            diffuseColor: Vec( 1, 1, 1 ),
-            specularColor: Vec( 1, 1, 1 )
-          }
+          // 8 lights in a cube
+          ...Array( 8 ).fill( 0 ).map( ( _, i ) => {
+            return {
+              direction: Vec( ...bin( i ) ),
+              ambientColor: Vec( ...bin( i ) ),
+              diffuseColor: Vec( 1, 1, 1 ),
+              specularColor: Vec( 1, 1, 1 )
+            }
+          } )
         ],
         material: {
           ambientColor: Vec( 0.05, 0.05, 0.05 ),
@@ -90,8 +91,8 @@ const init = () => {
           radius: 2.0
         },
         fractal: {
-          power: 6,
-          numIterations: 4,
+          power: 2,
+          numIterations: 5,
           escapeCriteria: 2.0
         }
       }
@@ -121,7 +122,7 @@ const init = () => {
     const update = () => {
       controls.update();
       perspective.lookAt( Vec( 0, 0, 0 ) );
-      uniforms.uApp.value.time = clock.getElapsedTime();
+      uniforms.uApp.value.time = ( dt() - time );
       uniforms.uCamera.value.position = perspective.position;
       uniforms.uCamera.value.viewMatrix = perspective.matrixWorldInverse;
       uniforms.uCamera.value.projectionMatrix = perspective.projectionMatrix;
@@ -130,7 +131,6 @@ const init = () => {
     update();
     renderer.render( scene, orthoCam );
   };
-
   animate();
 }
 init()

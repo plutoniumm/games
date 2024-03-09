@@ -15,15 +15,6 @@ struct Params {
   float finiteDifferenceEpsilon;
 };
 
-// ---------------- lighting ---------------- //
-
-struct PointLight {
-  vec3 position;
-  vec3 ambientColor;
-  vec3 diffuseColor;
-  vec3 specularColor;
-};
-
 struct DirectionalLight {
   vec3 direction;
   vec3 ambientColor;
@@ -58,7 +49,7 @@ struct Intersection {
 
 // ---------------- scene ---------------- //
 
-const int numLights = 2;
+const int numLights = 4;
 
 struct Fractal {
   int power;
@@ -81,22 +72,12 @@ uniform Camera uCamera;
 uniform Params uParams;
 uniform Scene uScene;
 
-// ================ functions ================ //
-
-// ---------------- utilities ---------------- //
-
 vec2 linmap(vec2 in_val, vec2 in_min, vec2 in_max, vec2 out_min, vec2 out_max) {
   return (in_val - in_min) / (in_max - in_min) * (out_max - out_min) + out_min;
 }
 
-// ---------------- primitives ---------------- //
-
 float sdfSphere(Sphere sphere, vec3 position) {
   return length(position - sphere.position) - sphere.radius;
-}
-
-vec3 normalSphere(Sphere sphere, vec3 position) {
-  return normalize(position - sphere.position);
 }
 
 Intersection intersectionSphereLine(Sphere sphere, Line line) {
@@ -297,53 +278,6 @@ float sdfJulia(Fractal fractal, vec4 z, vec4 c) {
   mat4 J = mat4(dzx.d, dzy.d, dzz.d, dzw.d);
   return (length(dzx.q) * log(length(dzx.q))) / (2.0 * length(normalize(dzx.q) * J));
 }
-float sdfMandelbrot(Fractal fractal, vec4 c, vec4 z) {
-  DualQ dzx = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzy = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzz = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzw = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-
-  DualQ dcx = DualQ(c, vec4(1.0, 0.0, 0.0, 0.0));
-  DualQ dcy = DualQ(c, vec4(0.0, 1.0, 0.0, 0.0));
-  DualQ dcz = DualQ(c, vec4(0.0, 0.0, 1.0, 0.0));
-  DualQ dcw = DualQ(c, vec4(0.0, 0.0, 0.0, 1.0));
-
-  for(int i = 0; i < fractal.numIterations; ++i) {
-        // forward-mode automatic differentiation
-    dzx = dqAdd(dqPow(dzx, fractal.power), dcx);
-    dzy = dqAdd(dqPow(dzy, fractal.power), dcy);
-    dzz = dqAdd(dqPow(dzz, fractal.power), dcz);
-    dzw = dqAdd(dqPow(dzw, fractal.power), dcw);
-
-    if(length(dzx.q) > fractal.escapeCriteria)
-      break;
-  }
-
-  mat4 J = mat4(dzx.d, dzy.d, dzz.d, dzw.d);
-  return (length(dzx.q) * log(length(dzx.q))) / (2.0 * length(normalize(dzx.q) * J));
-}
-float sdfMandelbulb(Fractal fractal, vec3 c, vec3 z) {
-  DualT dzx = DualT(z, vec3(0.0, 0.0, 0.0));
-  DualT dzy = DualT(z, vec3(0.0, 0.0, 0.0));
-  DualT dzz = DualT(z, vec3(0.0, 0.0, 0.0));
-
-  DualT dcx = DualT(c, vec3(1.0, 0.0, 0.0));
-  DualT dcy = DualT(c, vec3(0.0, 1.0, 0.0));
-  DualT dcz = DualT(c, vec3(0.0, 0.0, 1.0));
-
-  for(int i = 0; i < fractal.numIterations; ++i) {
-        // forward-mode automatic differentiation
-    dzx = dtAdd(dtPow(dzx, fractal.power), dcx);
-    dzy = dtAdd(dtPow(dzy, fractal.power), dcy);
-    dzz = dtAdd(dtPow(dzz, fractal.power), dcz);
-
-    if(length(dzx.t) > fractal.escapeCriteria)
-      break;
-  }
-
-  mat3 J = mat3(dzx.d, dzy.d, dzz.d);
-  return (length(dzx.t) * log(length(dzx.t))) / (2.0 * length(normalize(dzx.t) * J));
-}
 
 vec4 normalJulia(Fractal fractal, vec4 z, vec4 c) {
   DualQ dzx = DualQ(z, vec4(1.0, 0.0, 0.0, 0.0));
@@ -370,53 +304,6 @@ vec4 normalJulia(Fractal fractal, vec4 z, vec4 c) {
   mat4 J = mat4(dzx.d, dzy.d, dzz.d, dzw.d);
   return dzx.q * J;
 }
-vec4 normalMandelbrot(Fractal fractal, vec4 c, vec4 z) {
-  DualQ dzx = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzy = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzz = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-  DualQ dzw = DualQ(z, vec4(0.0, 0.0, 0.0, 0.0));
-
-  DualQ dcx = DualQ(c, vec4(1.0, 0.0, 0.0, 0.0));
-  DualQ dcy = DualQ(c, vec4(0.0, 1.0, 0.0, 0.0));
-  DualQ dcz = DualQ(c, vec4(0.0, 0.0, 1.0, 0.0));
-  DualQ dcw = DualQ(c, vec4(0.0, 0.0, 0.0, 1.0));
-
-  for(int i = 0; i < fractal.numIterations; ++i) {
-        // forward-mode automatic differentiation
-    dzx = dqAdd(dqPow(dzx, fractal.power), dcx);
-    dzy = dqAdd(dqPow(dzy, fractal.power), dcy);
-    dzz = dqAdd(dqPow(dzz, fractal.power), dcz);
-    dzw = dqAdd(dqPow(dzw, fractal.power), dcw);
-
-    if(length(dzx.q) > fractal.escapeCriteria)
-      break;
-  }
-
-  mat4 J = mat4(dzx.d, dzy.d, dzz.d, dzw.d);
-  return dzx.q * J;
-}
-vec3 normalMandelbulb(Fractal fractal, vec3 c, vec3 z) {
-  DualT dzx = DualT(z, vec3(0.0, 0.0, 0.0));
-  DualT dzy = DualT(z, vec3(0.0, 0.0, 0.0));
-  DualT dzz = DualT(z, vec3(0.0, 0.0, 0.0));
-
-  DualT dcx = DualT(c, vec3(1.0, 0.0, 0.0));
-  DualT dcy = DualT(c, vec3(0.0, 1.0, 0.0));
-  DualT dcz = DualT(c, vec3(0.0, 0.0, 1.0));
-
-  for(int i = 0; i < fractal.numIterations; ++i) {
-        // forward-mode automatic differentiation
-    dzx = dtAdd(dtPow(dzx, fractal.power), dcx);
-    dzy = dtAdd(dtPow(dzy, fractal.power), dcy);
-    dzz = dtAdd(dtPow(dzz, fractal.power), dcz);
-
-    if(length(dzx.t) > fractal.escapeCriteria)
-      break;
-  }
-
-  mat3 J = mat3(dzx.d, dzy.d, dzz.d);
-  return dzx.t * J;
-}
 
 // ---------------- reflection ---------------- //
 
@@ -438,8 +325,7 @@ vec3 phongReflection(vec3 surfaceNormal, vec3 viewDirection, DirectionalLight li
     specularColor += lights[i].specularColor * material.specularColor * specularCoefficient;
   }
 
-  vec3 color = clamp(ambientColor + diffuseColor + specularColor + material.emissionColor, 0.0, 1.0);
-  return color;
+  return clamp(ambientColor + diffuseColor + specularColor + material.emissionColor, 0.0, 1.0);
 }
 
 // ---------------- sphere tracing ---------------- //
@@ -455,24 +341,21 @@ vec3 sphereTracing(App app, Scene scene, Params params, Line ray) {
     vec4 criticalPoint = vec4(0.0);
 
     for(int i = 0; i < params.numIterations; ++i) {
-      float sd = sdfMandelbulb(scene.fractal, ray.position, criticalPoint.xyz);
+      float sd = sdfJulia(scene.fractal, vec4(ray.position, 0.0), juliaType);
       // ray marching
       ray.position += sd * ray.direction;
-      // collision detection
       if(abs(sd) < params.convergenceCriteria) {
-        vec3 surfaceNormal = normalize(normalMandelbulb(scene.fractal, ray.position, criticalPoint.xyz));
-        //  frag color
-        return phongReflection(surfaceNormal, ray.direction, scene.lights, scene.material);
+        vec3 Normal = normalize(normalJulia(scene.fractal, vec4(ray.position, 0.0), juliaType).xyz);
+        return phongReflection(Normal, ray.direction, scene.lights, scene.material);
       }
 
-      if(sdfSphere(scene.bound, ray.position) > 0.0)
+      if(sdfSphere(scene.bound, ray.position) > -0.5)
         break;
     }
   }
 
   return scene.backgroundColor;
 }
-
 // ---------------- main ---------------- //
 
 void main() {
