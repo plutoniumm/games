@@ -13,7 +13,7 @@
   <link rel="manifest" href="/manifest.json">
 
   <link rel="shortcut icon" href="/assets/2048.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/2048.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/2048.png" type="image/png">
 
   <meta name="description" content="2048 game">
   <meta name="author" content="plutoniumm">
@@ -29,6 +29,13 @@
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 3;
+    }
+
+    /* disable scrolling */
+    body,
+    .container,
+    .game-container {
+      overflow-y: hidden;
     }
   </style>
 </head>
