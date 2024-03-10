@@ -15,7 +15,7 @@ let pong = {
 
   // canvas variables
   totalPixels: 720300, // 980 wide, 4:3 aspect ratio
-  screenMargin: 50,
+  screenMargin: 5,
   gradient: null,
   color: '#ddd',
 
@@ -115,10 +115,10 @@ let pong = {
 
   movePlayer: ( e ) => {
     switch ( e.keyCode ) {
-      case 38:
+      case 37:
         this.player.direction = -1;
         break;
-      case 40:
+      case 39:
         this.player.direction = 1;
         break;
     }
@@ -158,8 +158,9 @@ let pong = {
     canvas.width = visualCanvas.offsetWidth * rows;
     canvas.height = h / rows;
     this.gradient = ctx.createLinearGradient( 0, 0, 0, canvas.height );
-    this.gradient.addColorStop( 1, "#333333" );
-    this.gradient.addColorStop( 0, "#363636" );
+    this.gradient.addColorStop( 1.0, "#111" );
+    this.gradient.addColorStop( 0.5, "#000" );
+    this.gradient.addColorStop( 0.0, "#111" );
 
     visualCanvas.width = visualCanvas.offsetWidth;
     visualCanvas.height = h;
@@ -174,7 +175,7 @@ let pong = {
     ctx.beginPath();
 
     ctx.fillStyle = this.gradient;
-    ctx.roundRect( 0, 0, canvas.width, canvas.height, 30 );
+    ctx.rect( 0, 0, canvas.width, canvas.height );
     ctx.fill();
 
     // draw the net

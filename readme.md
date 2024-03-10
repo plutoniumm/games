@@ -2,9 +2,9 @@ games idk
 
 - 2048
 - tetris
+- pong
+- julia sets
 - | space invaders...?
-- | pong...?
-- | mandelbulb (general julia)..?
 - | snake...?
 - https://github.com/Adamkob12/minecraft_bevy
 
