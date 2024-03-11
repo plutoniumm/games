@@ -5,28 +5,19 @@ const vctx = visualCanvas.getContext( "2d" );
 
 let pong = {
   lastRun: 0,
-
-  columns: null,
-  rows: null,
   cWidth: null,
   cHeight: null,
   quadW: null,
   quadH: null,
-
-  // canvas variables
   totalPixels: 720300, // 980 wide, 4:3 aspect ratio
-  screenMargin: 5,
   gradient: null,
-  color: '#ddd',
 
   paddle: {
     new: ( n ) => {
       return {
         w: this.paddleW,
         h: this.paddleH,
-        x: n === 'player' ?
-          pong.screenMargin :
-          canvas.width - this.paddleW - pong.screenMargin,
+        x: n === 'player' ? 0 : canvas.width - this.paddleW,
         y: ( canvas.height - this.paddleH ) / 2,
         score: 0,
         direction: 0,
@@ -66,13 +57,27 @@ let pong = {
       yDir: 0
     }
 
-
-    window.addEventListener( "touchstart", pong.touchMove );
+    let timer = null;
+    window.addEventListener( "touchstart", ( e ) => {
+      e.preventDefault();
+      this.touchStart = e.touches[ 0 ].clientX;
+    } );
     window.addEventListener( "touchmove", ( e ) => {
       e.preventDefault();
-      this.touchStart = e.touches[ 0 ].clientY;
+      clearTimeout( timer );
+      let drag = e.touches[ 0 ].clientX - this.touchStart;
+      if ( Math.abs( drag ) < 0.5 ) return;
+      this.touchStart = e.touches[ 0 ].clientX;
+      this.player.direction = Math.sign( drag );
+      timer = setTimeout( () => {
+        this.touchStart = e.touches[ 0 ].clientX;
+        this.player.direction = 0;
+      }, 10 );
     } );
-    window.addEventListener( "touchend", pong.touchMove );
+    window.addEventListener( "touchend", ( e ) => {
+      e.preventDefault();
+      this.player.direction = 0;
+    } );
     window.addEventListener( "resize", pong.scaleCanvas );
     document.addEventListener( "keydown", pong.movePlayer );
     document.addEventListener( "keyup",
@@ -84,8 +89,7 @@ let pong = {
   },
 
   paddleY: ( num ) => Math.min(
-    Math.max( num, pong.screenMargin ),
-    canvas.height - this.paddleH - pong.screenMargin
+    num, canvas.height - this.paddleH
   ),
 
   pause: () => {
@@ -98,11 +102,8 @@ let pong = {
 
   increaseScore: ( paddle ) => {
     paddle.score += 1;
-    if ( paddle.score === 11 ) {
-      pong.gameOver();
-    } else {
-      pong.newTurn();
-    }
+    paddle.score === 11 ?
+      pong.gameOver() : pong.newTurn();
   },
 
   newTurn: () => {
@@ -124,39 +125,16 @@ let pong = {
     }
   },
 
-  touchMove: ( e ) => {
-    e.preventDefault();
-    // measure drag
-    const drag = e.changedTouches[ 0 ].clientY - this.touchStart;
-    this.touchStart = null;
-    this.player.direction = Math.sign( drag );
-  },
-
   scaleCanvas: () => {
     cWidth = visualCanvas.offsetWidth;
-    const breakpoints = [
-      [ 720, 4, 1 ],
-      [ 480, 2, 2 ],
-      [ 0, 1, 4 ]
-    ];
-
     if ( typeof this.opponent !== 'undefined' ) {
-      this.opponent.x = canvas.width - this.paddleW - pong.screenMargin;
+      this.opponent.x = canvas.width - this.paddleW;
     }
 
-    for ( let i = 0;i < breakpoints.length;i++ ) {
-      if ( cWidth >= breakpoints[ i ][ 0 ] ) {
-        columns = breakpoints[ i ][ 1 ];
-        rows = breakpoints[ i ][ 2 ];
-        h = Math.round( pong.totalPixels / cWidth )
-        this.quadW = visualCanvas.offsetWidth / columns;
-        this.quadH = h / rows;
-        break;
-      }
-    }
+    h = Math.round( pong.totalPixels / cWidth )
 
-    canvas.width = visualCanvas.offsetWidth * rows;
-    canvas.height = h / rows;
+    canvas.width = visualCanvas.offsetWidth;
+    canvas.height = h;
     this.gradient = ctx.createLinearGradient( 0, 0, 0, canvas.height );
     this.gradient.addColorStop( 1.0, "#111" );
     this.gradient.addColorStop( 0.5, "#000" );
@@ -171,28 +149,26 @@ let pong = {
     ctx.clearRect( 0, 0, canvas.width, canvas.height );
     vctx.clearRect( 0, 0, canvas.width, canvas.height );
 
-    // background
     ctx.beginPath();
-
     ctx.fillStyle = this.gradient;
     ctx.rect( 0, 0, canvas.width, canvas.height );
     ctx.fill();
 
     // draw the net
-    ctx.strokeStyle = pong.color;
+    ctx.strokeStyle = "#fff";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.setLineDash( [ 15, 15 ] );
 
-    ctx.moveTo( canvas.width / 2, pong.screenMargin );
-    ctx.lineTo( canvas.width / 2, canvas.height - pong.screenMargin );
+    ctx.moveTo( canvas.width / 2, 0 );
+    ctx.lineTo( canvas.width / 2, canvas.height );
     ctx.stroke();
 
     // draw the ball
-    ctx.fillStyle = pong.color;
+    ctx.fillStyle = "#fff";
     this.ball.xPos += progress * this.ball.xDir;
     this.ball.yPos += progress * this.ball.yDir;
-    if ( this.ball.yPos <= pong.screenMargin || this.ball.yPos + this.ball.h >= ( canvas.height - pong.screenMargin ) ) {
+    if ( this.ball.yPos <= 0 || this.ball.yPos + this.ball.h >= ( canvas.height ) ) {
       this.ball.yDir = this.ball.yDir * -1;
     }
     ctx.fillRect( this.ball.xPos, this.ball.yPos, this.ball.w, this.ball.h );
@@ -216,9 +192,11 @@ let pong = {
     ctx.fillText( opponent.score, canvas.width / 2 + 30, 100 );
 
     // Draw the paddles
-    ctx.fillStyle = pong.color;
+    ctx.fillStyle = "#fff";
     if ( this.player.direction != 0 ) {
-      this.player.y = pong.paddleY( this.player.y + progress * this.player.maxSpeed * this.player.direction );
+      this.player.y = pong.paddleY(
+        this.player.y + progress * this.player.maxSpeed * this.player.direction
+      );
     }
 
     ballCenter = ( this.ball.yPos + this.ball.h / 2 );
@@ -231,23 +209,7 @@ let pong = {
     ctx.fillRect( this.player.x, this.player.y, this.player.w, this.player.h );
     ctx.fillRect( this.opponent.x, this.opponent.y, this.opponent.w, this.opponent.h );
 
-    // draw to the onscreen canvas
-    switch ( columns ) {
-      case 4:
-        vctx.drawImage( canvas, 0, 0 );
-        break;
-      case 2:
-        vctx.drawImage( canvas, 0, 0, quadW * 2, quadH, 0, 0, quadW * 2, quadH );
-        vctx.drawImage( canvas, quadW * 2, 0, quadW * 2, quadH, 0, quadH, quadW * 2, quadH );
-        break;
-      case 1:
-        vctx.drawImage( canvas, 0, 0, quadW, quadH, 0, 0, quadW, quadH );
-        vctx.drawImage( canvas, quadW, 0, quadW, quadH, 0, quadH, quadW, quadH );
-        vctx.drawImage( canvas, quadW * 2, 0, quadW, quadH, 0, quadH * 2, quadW, quadH );
-        vctx.drawImage( canvas, quadW * 3, 0, quadW, quadH, 0, quadH * 3, quadW, quadH );
-        break;
-    }
-
+    vctx.drawImage( canvas, 0, 0 );
     this.lastRun = timestamp;
     requestAnimationFrame( pong.loop );
   },
