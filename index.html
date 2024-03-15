@@ -34,22 +34,23 @@
 
 <body class="w-100 tc f-col j-ct al-ct" style="height: 100vh;">
   <h3>some games idk..?</h3>
-  <a class="rx5 m10 d-b f j-ct" href="./g/2048.html">
-    <img src="./assets/2048.svg" alt="2048" height="38px" width="38px">
-    2048
-  </a>
-  <a class="rx5 m10 d-b f j-ct" href="./g/tetris.html">
-    <img src="./assets/tetris.svg" alt="tetris" height="38px" width="38px">
-    tetris
-  </a>
-  <a class="rx5 m10 d-b f j-ct" href="./g/pong.html">
-    <img src="./assets/pong.svg" alt="pong" height="38px" width="38px">
-    pong
-  </a>
-  <a class="rx5 m10 d-b f j-ct" href="./g/julia.html">
-    <img src="./assets/julia.svg" alt="julia" height="38px" width="38px">
-    julia
-  </a>
+  <template>
+    <a class="rx5 m10 d-b f j-ct" href="./g/-name;.html">
+      <img src="./assets/-name;.svg" alt="2048" height="38px" width="38px">
+      -name;
+    </a>
+  </template>
+
+  <script>
+    const template = document.querySelector( 'template' );
+    const games = [ '2048', 'tetris', 'pong', 'julia', 'snake' ];
+    const clone = template.innerHTML;
+
+    games.forEach( game =>
+      document.body.innerHTML +=
+      clone.replaceAll( "-name;", game )
+    );
+  </script>
 </body>
 
 </html>
