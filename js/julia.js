@@ -26,7 +26,7 @@ const init = () => {
   const scene = new THREE.Scene();
 
   const orthoCam = new THREE.OrthographicCamera(
-    IW / - 2.0, IW / +2.0, IH / +2.0, IH / -2.0, 0, 1
+    IW / -2.0, IW / +2.0, IH / +2.0, IH / -2.0, 0, 1
   );
   const perspective = new THREE.PerspectiveCamera(
     45.0, IW / IH, 0.1, 1000

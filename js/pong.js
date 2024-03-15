@@ -3,13 +3,17 @@ const ctx = canvas.getContext( "2d" );
 const visualCanvas = document.getElementById( "onscreen-canvas" );
 const vctx = visualCanvas.getContext( "2d" );
 
+const IW = window.innerWidth;
+// let totalPixels = 720300
+let totalPixels = window.innerWidth > 1024 ? 720300 : 480200;
+
 let pong = {
   lastRun: 0,
   cWidth: null,
   cHeight: null,
   quadW: null,
   quadH: null,
-  totalPixels: 720300, // 980 wide, 4:3 aspect ratio
+  totalPixels: totalPixels, // 980 wide, 4:3 aspect ratio
   gradient: null,
 
   paddle: {

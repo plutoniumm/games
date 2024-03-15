@@ -7,10 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+  <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/snake.css">
-  <!-- <script async src="sw.js"></script> -->
-  <!-- <link rel="manifest" href="manifest.json"> -->
-
   <link rel="shortcut icon" href="/assets/snake.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/snake.png" type="image/png">
 
@@ -28,6 +26,8 @@
     body {
       height: 100%;
       margin: 0;
+      -ms-touch-action: none;
+      touch-action: none;
     }
 
     body {

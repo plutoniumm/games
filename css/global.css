@@ -1,0 +1,15 @@
+svg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  height: 28px;
+  width: 28px;
+}
+
+html,
+body {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -ms-touch-action: none;
+  touch-action: none;
+}
