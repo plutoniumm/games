@@ -607,7 +607,7 @@ class KeyboardInputManager {
         event.shiftKey;
       var mapped = map[ event.which ];
 
-      if ( !modifiers || mapped !== undefined ) {
+      if ( !modifiers && mapped !== undefined ) {
         event.preventDefault();
         self.emit( "move", mapped );
       }
@@ -615,7 +615,12 @@ class KeyboardInputManager {
       // R key restarts the game
       if ( !modifiers && event.which === 82 ) {
         self.restart.call( self, event );
-      }
+      };
+
+      // U key undo the last move
+      if ( !modifiers && event.which === 85 ) {
+        self.undo.call( self, event );
+      };
     } );
 
     // Respond to button presses
