@@ -1,5 +1,7 @@
 {
   "scripts": {
-    "deploy": "npx gh-pages -d ."
+    "dev": "php -S localhost:3000",
+    "deploy": "npx gh-pages -d .",
+    "new": "bash ./scripts/new.sh"
   }
 }

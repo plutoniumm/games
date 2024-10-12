@@ -1,5 +1,7 @@
 games idk
 
+https://www.quantamagazine.org/maze-proof-establishes-a-backbone-for-statistical-mechanics-20240207/?mc_cid=0f25eb2815
+
 - 2048
 - tetris
 - pong
