@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>pong</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/pong.css">
+  <link rel="shortcut icon" href="/assets/pong.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/pong.png" type="image/png">
+
+  <meta name="description" content="pong game">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+    content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
+  <style>
+    canvas {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      width: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+
+    body {
+      background: #000;
+    }
+
+    @media (max-width: 600px) {
+      canvas {
+        transform: rotate(-90deg) translate(100%, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="onscreen-canvas"></canvas>
+
+  <script src="/js/pong.js"></script>
+</body>
+
+</html>

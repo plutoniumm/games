@@ -1,0 +1,60 @@
+body {
+  background: #000;
+  background-size: 400% 400%;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+canvas {
+  max-height: 70vh;
+  margin-top: 64px;
+}
+
+.navbar {
+  width: 100%;
+  font-size: 32px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+}
+
+.game-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #FD0;
+  margin-top: 0;
+  width: 100%;
+}
+
+#pause_game,
+#continue_game,
+#restart_game,
+.game-title {
+  z-index: 10;
+}
+
+#continue_game {
+  display: none;
+}
+
+@media all and (max-width: 800px) {
+  #restart_game {
+    opacity: 0;
+  }
+
+  #pause_game {
+    right: 10px;
+  }
+
+  #continue_game {
+    right: 15px;
+  }
+}
+
+@media all and (max-width: 500px) {
+  canvas {
+    height: 60vh;
+  }
+}

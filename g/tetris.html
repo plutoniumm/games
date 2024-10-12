@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>tetris</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/tetris.css">
+  <link rel="shortcut icon" href="/assets/tetris.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/tetris.png" type="image/png">
+
+  <meta name="description" content="tetris game">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+    content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body xmlns="http://www.w3.org/2000/svg">
+  <div class="navbar">
+    <h1 class="game-title">Тетрис: <span id="score">0</span></h1>
+    <div style="display: flex;justify-content: space-around;max-width: 300px;margin:0 auto;">
+      <svg id="restart_game" viewBox="0 0 32 32" fill="none" stroke="#fff">
+        <path d="M29 16 C29 22 24 29 16 29 8 29 3 22 3 16 3 10 8 3 16 3 21 3 25 6 27 9 M20 10 L27 9 28 2" />
+      </svg>
+      <svg id="pause_game" viewBox="0 0 32 32" fill="none" stroke="#fff">
+        <path d="M23 2 L23 30 M9 2 L9 30" />
+      </svg>
+      <svg id="continue_game" viewBox="0 0 32 32" fill="#fff">
+        <path d="M10 2 L10 30 24 16 Z" />
+      </svg>
+    </div>
+  </div>
+  <p><br></p>
+  <p><br></p>
+  <p><br></p>
+  <canvas id="tetris" width="300" height="500" style="border:0px solid transparent" />
+  <script src="/js/tetris.js"></script>
+</body>
+
+</html>
