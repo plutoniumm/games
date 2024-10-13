@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>flow</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/flow.css">
+  <link rel="shortcut icon" href="/assets/flow.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/flow.png" type="image/png">
+
+  <meta name="description" content="flow based on numberlink">
+  <meta name="author" content="plutoniumm">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+    content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+  <script src="/js/flow.js"></script>
+
+  <form id="controls" style="font-family: Helvetica, sans-serif;text-align: center;">
+    <label>Scale: <input type="number" id="scale" value="12" step="1"></label><br>
+    <br>
+    <button type="submit">Generate</button>
+  </form>
+  <script>
+    const form = document.getElementById( 'controls' );
+    form.addEventListener( 'submit', ( e ) => {
+      e.preventDefault();
+      gridSize.y = form.elements.scale.value;
+      gridSize.x = form.elements.scale.value;
+      windowResized();
+      init();
+    } );
+  </script>
+</body>
+
+</html>

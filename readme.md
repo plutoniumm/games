@@ -1,13 +1,12 @@
 games idk
 
-https://www.quantamagazine.org/maze-proof-establishes-a-backbone-for-statistical-mechanics-20240207/?mc_cid=0f25eb2815
-
 - 2048
 - tetris
 - pong
-- julia sets
+- 3d julia sets
+- snake
+- lorentz attractor
 - | space invaders...?
-- | snake...?
-- https://github.com/Adamkob12/minecraft_bevy
+<!-- - https://github.com/Adamkob12/minecraft_bevy -->
 
 > I'm not adding a license file. Treat this as MIT.
