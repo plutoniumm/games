@@ -10,18 +10,12 @@
 
   <style>
     body {
-      background:
-        radial-gradient(50% 55% at 21vw 19vh, #cbadeb, transparent),
-        radial-gradient(50% 85% at 85vw 77vh, #edb2d0, transparent),
-        radial-gradient(70% 50% at 90vw 10vh, #7ae6c7, transparent),
-        radial-gradient(87% 81% at 16vw 91vh, #f4c4b3, transparent);
+      background: linear-gradient(135deg, #F9A, #F77);
       background-repeat: no-repeat;
       color: #fff;
-      /* add a text shadow so that it's visible */
-      text-shadow:
-        0 0 3px #0008,
-        0 0 1px #000;
       font-size: 32px;
+      height: 100vh;
+      width: calc(100vw - 40px);
     }
 
     a {
@@ -38,8 +32,7 @@
   </style>
 </head>
 
-<body class="w-100 tc f-col j-ct al-ct" style="height: 100vh;">
-  <h3>some games and simulations idk..?</h3>
+<body svg:xmlns="http://www.w3.org/2000/svg" class="tc f-col j-ct al-ct p20">
   <template>
     <a class="rx5 m10 d-b tc" href="./g/-name;.html">
       <img src="./assets/-name;.svg" alt="2048" height="100px" width="100px">
@@ -48,7 +41,7 @@
     </a>
   </template>
 
-  <div id="games" class="f j-ar fw" style="width: min(600px, 95%);">
+  <div id="games" class="f j-ar fw h-100 w-100">
 
   </div>
 
